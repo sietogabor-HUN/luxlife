@@ -1,0 +1,2090 @@
+/* ================================================================
+   LUXLIFE MAGAZINE — styles.css
+   ID-scoped under #luxlife-magazine
+   Expanded format — one property per line
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   01. GLOBAL RESET & BASE
+   (Cannot be scoped — applies to html/body)
+   ---------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #09090A;
+}
+
+
+/* ----------------------------------------------------------------
+   02. KEYFRAME ANIMATIONS
+   (Global scope — cannot be ID-scoped)
+   ---------------------------------------------------------------- */
+
+@keyframes lx-cover-zoom {
+  from {
+    transform: scale(1.07);
+    filter: brightness(0.8);
+  }
+  to {
+    transform: scale(1.00);
+    filter: brightness(1.0);
+  }
+}
+
+@keyframes lx-grain-flicker {
+  0%   { background-position:   0px    0px; }
+  20%  { background-position: -48px  -32px; }
+  40%  { background-position:  32px   48px; }
+  60%  { background-position: -24px   24px; }
+  80%  { background-position:  48px  -48px; }
+  100% { background-position:   0px    0px; }
+}
+
+@keyframes lx-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lx-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lx-logo-reveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.5em;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.08em;
+    filter: blur(0);
+  }
+}
+
+@keyframes lx-line-draw {
+  from {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+@keyframes lx-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ----------------------------------------------------------------
+   03. ROOT — CSS CUSTOM PROPERTIES
+   ---------------------------------------------------------------- */
+
+#luxlife-magazine {
+
+  /* --- Palette --- */
+  --lx-void:            #09090A;
+  --lx-charcoal:        #1A1918;
+  --lx-dark:            #2C2A27;
+  --lx-gold:            #C4A660;
+  --lx-gold-light:      #D9BC80;
+  --lx-gold-dim:        #9C8244;
+  --lx-gold-pale:       #EEE0BE;
+  --lx-ecru:            #F2EDDF;
+  --lx-bone:            #EDE8D8;
+  --lx-fog:             #9E998F;
+  --lx-smoke:           #6A6560;
+  --lx-cream:           #FAF8F2;
+  --lx-white:           #FEFEFC;
+
+  /* --- Typography --- */
+  --lx-font-display:    'Bodoni Moda', 'Didot', 'Big Caslon', Georgia, serif;
+  --lx-font-headline:   'Fraunces', 'Garamond', Georgia, serif;
+  --lx-font-ui:         'Jost', 'Gill Sans', system-ui, sans-serif;
+
+  /* --- Layout --- */
+  --lx-cover-width:     42%;
+  --lx-nav-height:      72px;
+
+  /* --- Easing --- */
+  --lx-ease:            cubic-bezier(0.25, 0.10, 0.25, 1.00);
+  --lx-ease-out:        cubic-bezier(0.00, 0.00, 0.20, 1.00);
+  --lx-ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1.00);
+
+}
+
+
+/* ----------------------------------------------------------------
+   04. MAGAZINE ROOT WRAPPER
+   ---------------------------------------------------------------- */
+
+#luxlife-magazine {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: var(--lx-font-ui);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+
+/* ================================================================
+   05. LEFT PANEL — MAGAZINE COVER
+   Blogum-style: small logo · giant stacked display text · bottom article strip
+   ================================================================ */
+
+#luxlife-magazine .cover {
+  width: var(--lx-cover-width);
+  height: 100vh;
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Spine accent */
+#luxlife-magazine .cover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(196, 166, 96, 0.35) 20%,
+    rgba(196, 166, 96, 0.55) 50%,
+    rgba(196, 166, 96, 0.35) 80%,
+    transparent
+  );
+  z-index: 10;
+  pointer-events: none;
+}
+
+
+/* ----- Background Photo ----- */
+
+#luxlife-magazine .cover-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 25%;
+  animation: lx-cover-zoom 16s var(--lx-ease-out) forwards;
+  will-change: transform, filter;
+}
+
+
+/* ----- Film Grain ----- */
+
+#luxlife-magazine .cover-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  animation: lx-grain-flicker 0.35s steps(1) infinite;
+}
+
+
+/* ----- Gradient Overlay ----- */
+/* Top: dark for large wordmark readability             */
+/* Left-center slight tint for hero text legibility    */
+/* Bottom: heavy dark for article strip on photo       */
+
+#luxlife-magazine .cover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(to bottom,  rgba(9, 9, 10, 0.88)  0%,   rgba(9, 9, 10, 0.20) 18%,  rgba(9, 9, 10, 0)     28%),
+    linear-gradient(to right,   rgba(9, 9, 10, 0.28)  0%,   rgba(9, 9, 10, 0)     55%),
+    linear-gradient(to top,     rgba(9, 9, 10, 0.95)  0%,   rgba(9, 9, 10, 0.75) 32%,  rgba(9, 9, 10, 0.10)  44%,  rgba(9, 9, 10, 0) 54%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* ====================================================
+   LOGO BAR — Large wordmark at top
+   ==================================================== */
+
+#luxlife-magazine .cover-top-bar {
+  padding: 1.6rem 1.8rem 0.8rem;
+  animation: lx-logo-reveal 1.1s 0.1s var(--lx-ease-out) both;
+}
+
+/* Hamburger + mobil kereső: desktopn rejtve */
+#luxlife-magazine .cover-menu-btn {
+  display: none;
+}
+
+#luxlife-magazine .cover-search-mobile {
+  display: none;
+}
+
+/* Large magazine wordmark */
+#luxlife-magazine .cover-wordmark {
+  display: block;
+  font-family: var(--lx-font-display);
+  font-size: clamp(4.2rem, 8.5vw, 10rem);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  letter-spacing: 0.015em;
+  line-height: 0.9;
+  color: var(--lx-cream);
+  text-decoration: none;
+  transition: opacity 0.25s var(--lx-ease);
+}
+
+#luxlife-magazine .cover-wordmark:hover {
+  opacity: 0.80;
+}
+
+#luxlife-magazine .cover-wordmark em {
+  font-style: italic;
+  color: var(--lx-gold-light);
+}
+
+/* Szlogen — az f descender aljáig húzódik fel */
+#luxlife-magazine .cover-slogan {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.65rem, 1.1vw, 0.95rem);
+  font-weight: 200;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lx-cream);
+  margin-top: 0.1em;
+  padding-left: 0.1em;
+}
+
+@media (max-width: 1500px) {
+
+  #luxlife-magazine .cover-top-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.2rem 1.4rem;
+  }
+
+  #luxlife-magazine .cover-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+    flex-shrink: 0;
+  }
+
+  #luxlife-magazine .cover-menu-btn span {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background-color: var(--lx-cream);
+    border-radius: 1px;
+  }
+
+  #luxlife-magazine .cover-wordmark {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+}
+
+
+/* ====================================================
+   HERO DISPLAY TEXT — Large stacked typography
+   ==================================================== */
+
+#luxlife-magazine .cover-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vh 1.8rem 0;
+  animation: lx-fade-up 0.9s 0.2s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 0.6rem;
+}
+
+/* Smaller first line */
+#luxlife-magazine .hero-sm {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.9rem, 3.8vw, 4.4rem);
+  font-weight: 200;
+  line-height: 1.0;
+  color: var(--lx-cream);
+  letter-spacing: -0.02em;
+}
+
+/* Dominant large line */
+#luxlife-magazine .hero-xl {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(3.8rem, 7.5vw, 8.8rem);
+  font-weight: 900;
+  line-height: 0.90;
+  color: var(--lx-cream);
+  letter-spacing: -0.03em;
+}
+
+/* Small tracked sub-line */
+#luxlife-magazine .hero-sub {
+  font-family: var(--lx-font-ui);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(250, 248, 242, 0.80);
+  margin-bottom: 0.5rem;
+}
+
+/* Large gold italic line */
+#luxlife-magazine .hero-italic {
+  font-family: var(--lx-font-headline);
+  font-style: italic;
+  font-size: clamp(2.3rem, 4.6vw, 5.5rem);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.0;
+  color: var(--lx-gold-light);
+  letter-spacing: -0.01em;
+}
+
+#luxlife-magazine .hero-italic em {
+  font-style: normal;
+  color: var(--lx-gold);
+}
+
+/* Hero block link — wraps the full title + sub + italic */
+#luxlife-magazine .cover-hero-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.25s var(--lx-ease);
+}
+
+#luxlife-magazine .cover-hero-link:hover {
+  opacity: 0.85;
+}
+
+
+/* ====================================================
+   BOTTOM ARTICLE STRIP — 3 columns (Blogum teasers)
+   ==================================================== */
+
+#luxlife-magazine .cover-articles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  background-color: transparent;
+  border-top: 0.5px solid rgba(196, 166, 96, 0.20);
+  padding: 1.6rem 1.8rem 2rem;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+/* Thin vertical dividers between columns */
+#luxlife-magazine .ca-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-right: 1.3rem;
+  padding-left: 1.3rem;
+  border-left: 0.5px solid rgba(196, 166, 96, 0.18);
+}
+
+#luxlife-magazine .ca-col:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+#luxlife-magazine .ca-col:last-child {
+  padding-right: 0;
+}
+
+/* Category label — Inter 200 */
+#luxlife-magazine .ca-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 200;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--lx-gold);
+}
+
+/* Cím — Inter 800 */
+#luxlife-magazine .ca-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--lx-cream);
+  hyphens: auto;
+}
+
+/* Hosszabb cím — Inter 800 */
+#luxlife-magazine .ca-title-rg {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--lx-cream);
+}
+
+#luxlife-magazine .ca-title a,
+#luxlife-magazine .ca-title-rg a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.22s var(--lx-ease);
+}
+
+#luxlife-magazine .ca-title a:hover,
+#luxlife-magazine .ca-title-rg a:hover {
+  opacity: 0.70;
+}
+
+/* "Teljes cikk →" CTA — Inter 200 */
+#luxlife-magazine .ca-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.60rem;
+  font-weight: 200;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--lx-gold-light);
+  text-decoration: none;
+  margin-top: auto;
+  transition: color 0.22s var(--lx-ease);
+}
+
+#luxlife-magazine .ca-cta:hover {
+  color: var(--lx-cream);
+}
+
+
+/* ================================================================
+   06. RIGHT PANEL — ONLINE MAGAZINE CONTENT
+   ================================================================ */
+
+#luxlife-magazine .content-panel {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #EDEEEF;
+  display: flex;
+  flex-direction: column;
+  border-left: none;
+}
+
+#luxlife-magazine .content-panel::-webkit-scrollbar {
+  width: 3px;
+}
+
+#luxlife-magazine .content-panel::-webkit-scrollbar-track {
+  background-color: var(--lx-bone);
+}
+
+#luxlife-magazine .content-panel::-webkit-scrollbar-thumb {
+  background-color: var(--lx-gold);
+  border-radius: 2px;
+}
+
+
+/* ---- Top Navigation Bar ---- */
+
+#luxlife-magazine .top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--lx-nav-height);
+  background-color: rgba(9, 9, 10, 0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.6rem;
+  position: relative;
+}
+
+#luxlife-magazine .nav-cats {
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  height: 100%;
+}
+
+#luxlife-magazine .nav-cats::-webkit-scrollbar {
+  display: none;
+}
+
+#luxlife-magazine .nav-cats li {
+  display: flex;
+  align-items: stretch;
+}
+
+#luxlife-magazine .nav-cats li a {
+  display: flex;
+  align-items: center;
+  height: var(--lx-nav-height);
+  padding: 0 1.1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lx-cream);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1.5px solid transparent;
+  transition-property: color, border-color;
+  transition-duration: 0.22s;
+  transition-timing-function: var(--lx-ease);
+}
+
+#luxlife-magazine .nav-cats li a:hover {
+  color: var(--lx-gold-light);
+  border-bottom-color: var(--lx-gold-light);
+}
+
+#luxlife-magazine .nav-cats li.active a {
+  color: var(--lx-gold-light);
+  border-bottom-color: var(--lx-gold-light);
+}
+
+#luxlife-magazine .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-shrink: 0;
+  position: absolute;
+  right: 1.6rem;
+}
+
+#luxlife-magazine .btn-search {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--lx-cream);
+  transition: color 0.2s var(--lx-ease);
+}
+
+#luxlife-magazine .btn-search:hover {
+  color: var(--lx-gold-light);
+}
+
+
+/* ---- Billboard hirdetés ---- */
+
+#luxlife-magazine .billboard-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0 0.4rem;
+  background-color: #EDEEEF;
+  flex-shrink: 0;
+}
+
+#luxlife-magazine .billboard-img {
+  display: block;
+  width: 100%;
+  max-width: 970px;
+  height: auto;
+  object-fit: cover;
+}
+
+#luxlife-magazine .billboard-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.50rem;
+  font-weight: 200;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(9, 9, 10, 0.35);
+  margin-top: 0.3rem;
+}
+
+
+/* ---- Content Area Wrapper ---- */
+
+#luxlife-magazine .content-area {
+  padding: 2.8rem 2.8rem 5rem;
+  flex-shrink: 0;
+}
+
+
+/* ---- Featured Article ---- */
+
+#luxlife-magazine .featured {
+  display: grid;
+  grid-template-columns: 56% 44%;
+  border: none;
+  overflow: hidden;
+  background-color: #ffffff;
+  margin-bottom: 3rem;
+  animation: lx-fade-in 0.8s 0.5s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .featured-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+#luxlife-magazine .featured-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition-property: transform;
+  transition-duration: 0.65s;
+  transition-timing-function: var(--lx-ease-out);
+}
+
+#luxlife-magazine .featured:hover .featured-img img {
+  transform: scale(1.05);
+}
+
+#luxlife-magazine .featured-img {
+  text-decoration: none;
+}
+
+#luxlife-magazine .featured-content {
+  padding: 2.8rem 2.6rem 2.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #ffffff;
+  text-decoration: none;
+}
+
+#luxlife-magazine .cat-tag {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--lx-gold-dim);
+  margin-bottom: 0.85rem;
+}
+
+#luxlife-magazine .featured-content h2 {
+  font-family: var(--lx-font-headline);
+  font-size: 2.2rem;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.18;
+  color: var(--lx-void);
+  margin-bottom: 1rem;
+}
+
+#luxlife-magazine .article-excerpt {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.80;
+  color: var(--lx-dark);
+  margin-bottom: 1rem;
+}
+
+#luxlife-magazine .article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--lx-font-ui);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--lx-fog);
+}
+
+#luxlife-magazine .meta-sep {
+  opacity: 0.35;
+}
+
+
+/* ---- Section Dividers ---- */
+
+#luxlife-magazine .sec-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.4rem;
+}
+
+#luxlife-magazine .sec-divider-accent {
+  width: 1.4rem;
+  height: 0.5px;
+  background-color: var(--lx-gold);
+  flex-shrink: 0;
+}
+
+#luxlife-magazine .sec-divider h3 {
+  font-family: var(--lx-font-ui);
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--lx-smoke);
+  white-space: nowrap;
+}
+
+#luxlife-magazine .sec-divider-line {
+  flex: 1;
+  height: 0.5px;
+  background-color: rgba(42, 40, 38, 0.10);
+}
+
+
+/* ---- Article Grid — 2 Columns ---- */
+
+#luxlife-magazine .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+  margin-bottom: 2.8rem;
+}
+
+
+/* ---- Article Grid — 3 Columns ---- */
+
+#luxlife-magazine .grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.6rem;
+  margin-bottom: 2.8rem;
+}
+
+
+/* ---- Article Card ---- */
+
+#luxlife-magazine .card {
+  position: relative;
+  background-color: var(--lx-white);
+  border: 0.5px solid rgba(42, 40, 38, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition-property: transform, box-shadow;
+  transition-duration: 0.35s;
+  transition-timing-function: var(--lx-ease-out);
+  animation: lx-card-enter 0.55s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background-color: var(--lx-gold);
+  z-index: 2;
+  transition-property: height;
+  transition-duration: 0.32s;
+  transition-timing-function: var(--lx-ease-out);
+}
+
+#luxlife-magazine .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 44px rgba(9, 9, 10, 0.10);
+}
+
+#luxlife-magazine .card:hover::before {
+  height: 100%;
+}
+
+#luxlife-magazine .card-img {
+  overflow: hidden;
+  position: relative;
+}
+
+#luxlife-magazine .card-img.r-16-10 {
+  aspect-ratio: 16 / 10;
+}
+
+#luxlife-magazine .card-img.r-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+#luxlife-magazine .card-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition-property: transform;
+  transition-duration: 0.55s;
+  transition-timing-function: var(--lx-ease-out);
+}
+
+#luxlife-magazine .card:hover .card-img img {
+  transform: scale(1.07);
+}
+
+#luxlife-magazine .card-body {
+  padding: 0.88rem 1.05rem 1.05rem;
+}
+
+#luxlife-magazine .card-body h4 {
+  font-family: var(--lx-font-headline);
+  font-size: 1.05rem;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.3;
+  color: var(--lx-void);
+  margin-bottom: 0.45rem;
+}
+
+#luxlife-magazine .card-body.sm h4 {
+  font-size: 0.95rem;
+  line-height: 1.32;
+}
+
+#luxlife-magazine .card-excerpt {
+  font-family: var(--lx-font-ui);
+  font-size: 0.68rem;
+  font-weight: 300;
+  line-height: 1.78;
+  color: var(--lx-fog);
+  margin-bottom: 0.62rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* ---- Advertisement Banner ---- */
+
+#luxlife-magazine .ad-banner {
+  position: relative;
+  background-color: var(--lx-ecru);
+  border: 0.5px solid rgba(196, 166, 96, 0.22);
+  padding: 2rem 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+#luxlife-magazine .ad-banner::before {
+  content: 'Hirdetés';
+  position: absolute;
+  top: 0.45rem;
+  left: 0.75rem;
+  font-family: var(--lx-font-ui);
+  font-size: 0.44rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lx-fog);
+  opacity: 0.42;
+}
+
+/* Subtle corner ornament */
+#luxlife-magazine .ad-banner::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(196, 166, 96, 0.35) 20%,
+    rgba(196, 166, 96, 0.55) 50%,
+    rgba(196, 166, 96, 0.35) 80%,
+    transparent
+  );
+}
+
+#luxlife-magazine .ad-headline {
+  font-family: var(--lx-font-headline);
+  font-style: italic;
+  font-size: 1.55rem;
+  font-weight: 300;
+  font-optical-sizing: auto;
+  color: var(--lx-dark);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.3rem;
+}
+
+#luxlife-magazine .ad-sub {
+  font-family: var(--lx-font-ui);
+  font-size: 0.57rem;
+  font-weight: 300;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lx-fog);
+  margin-bottom: 1.1rem;
+}
+
+#luxlife-magazine .ad-cta {
+  display: inline-block;
+  font-family: var(--lx-font-ui);
+  font-size: 0.54rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--lx-gold-dim);
+  border: 0.5px solid rgba(196, 166, 96, 0.42);
+  padding: 0.48rem 1.5rem;
+  text-decoration: none;
+  transition-property: background-color, color, border-color;
+  transition-duration: 0.24s;
+  transition-timing-function: var(--lx-ease);
+}
+
+#luxlife-magazine .ad-cta:hover {
+  background-color: var(--lx-gold);
+  color: var(--lx-void);
+  border-color: var(--lx-gold);
+}
+
+
+/* ================================================================
+   MOBIL NAVIGÁCIÓS MENÜ — Luxury editorial panel
+   ================================================================ */
+
+@keyframes lx-menu-item-in {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Panel — csúszik be jobbról, mint egy magazin oldal */
+#luxlife-magazine .mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 997;
+  transform: translateX(100%);
+  transition: transform 0.70s cubic-bezier(0.76, 0, 0.24, 1);
+  background:
+    radial-gradient(ellipse 90% 70% at 30% 50%, rgba(26, 20, 8, 0.97) 0%, rgba(9, 9, 10, 1) 100%);
+  display: flex;
+  overflow: hidden;
+}
+
+/* Grain textúra */
+#luxlife-magazine .mobile-menu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+#luxlife-magazine .mobile-menu.is-open {
+  transform: translateX(0);
+}
+
+/* Jobb oldali gerinc díszítőelem */
+#luxlife-magazine .mobile-menu-spine {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(196, 166, 96, 0.5) 20%,
+    rgba(217, 188, 128, 0.7) 50%,
+    rgba(196, 166, 96, 0.5) 80%,
+    transparent 100%
+  );
+}
+
+/* Bezárás gomb — bal felső sarok */
+#luxlife-magazine .mobile-menu-close {
+  position: absolute;
+  top: 1.8rem;
+  left: 1.6rem;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 0;
+}
+
+#luxlife-magazine .mobile-menu-close span {
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 1px;
+  background-color: rgba(250, 248, 242, 0.45);
+  transition: background-color 0.22s var(--lx-ease);
+}
+
+#luxlife-magazine .mobile-menu-close span:first-child { transform: rotate(45deg); }
+#luxlife-magazine .mobile-menu-close span:last-child  { transform: rotate(-45deg); }
+
+#luxlife-magazine .mobile-menu-close:hover span {
+  background-color: var(--lx-gold-light);
+}
+
+/* Belső tartalom */
+#luxlife-magazine .mobile-menu-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 5rem 2.2rem 2.6rem 2.4rem;
+  position: relative;
+  z-index: 1;
+  gap: 2rem;
+}
+
+/* Fejléc — logo + arany vonal */
+#luxlife-magazine .mobile-menu-header {
+  margin-bottom: 2rem;
+}
+
+#luxlife-magazine .mobile-menu-logo {
+  font-family: var(--lx-font-display);
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: var(--lx-cream);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 1.4rem;
+  opacity: 0;
+}
+
+#luxlife-magazine .mobile-menu.is-open .mobile-menu-logo {
+  animation: lx-fade-up 0.5s 0.1s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .mobile-menu-logo em {
+  font-style: italic;
+  color: var(--lx-gold-light);
+}
+
+#luxlife-magazine .mobile-menu-rule {
+  width: 0;
+  height: 0.5px;
+  background: linear-gradient(to right, var(--lx-gold), rgba(196, 166, 96, 0.2));
+}
+
+#luxlife-magazine .mobile-menu.is-open .mobile-menu-rule {
+  animation: lx-line-draw 0.8s 0.2s var(--lx-ease-out) both;
+}
+
+/* Navigáció */
+#luxlife-magazine .mobile-menu-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#luxlife-magazine .mmi {
+  opacity: 0;
+  border-bottom: 0.5px solid rgba(196, 166, 96, 0.12);
+}
+
+#luxlife-magazine .mmi:first-child {
+  border-top: 0.5px solid rgba(196, 166, 96, 0.12);
+}
+
+#luxlife-magazine .mobile-menu.is-open .mmi {
+  animation: lx-menu-item-in 0.55s calc(0.28s + var(--i) * 0.09s) var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .mmi a {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  text-decoration: none;
+  transition: transform 0.3s var(--lx-ease);
+}
+
+#luxlife-magazine .mmi a:hover {
+  transform: translateX(10px);
+}
+
+#luxlife-magazine .mmi-num {
+  font-family: var(--lx-font-headline);
+  font-style: italic;
+  font-size: 0.72rem;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  color: var(--lx-gold);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color 0.3s var(--lx-ease);
+}
+
+#luxlife-magazine .mmi-name {
+  font-family: var(--lx-font-display);
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--lx-cream);
+  transition: color 0.3s var(--lx-ease);
+}
+
+#luxlife-magazine .mmi a:hover .mmi-name {
+  color: var(--lx-gold-light);
+}
+
+#luxlife-magazine .mmi a:hover .mmi-num {
+  color: var(--lx-gold-light);
+}
+
+/* Lábléc */
+#luxlife-magazine .mobile-menu-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  opacity: 0;
+}
+
+#luxlife-magazine .mobile-menu.is-open .mobile-menu-footer {
+  animation: lx-fade-in 0.6s 0.75s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .mmf-tagline {
+  font-family: var(--lx-font-display);
+  font-style: italic;
+  font-size: 0.70rem;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: rgba(250, 248, 242, 0.22);
+}
+
+#luxlife-magazine .mmf-issue {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.50rem;
+  font-weight: 200;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(250, 248, 242, 0.14);
+}
+
+/* Hamburger → × morph animáció */
+#luxlife-magazine .cover-menu-btn.menu-open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+#luxlife-magazine .cover-menu-btn.menu-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+#luxlife-magazine .cover-menu-btn.menu-open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+#luxlife-magazine .cover-menu-btn span {
+  transition: transform 0.35s var(--lx-ease), opacity 0.25s var(--lx-ease);
+}
+
+
+/* ================================================================
+   KERESŐ OVERLAY — Editorial luxury
+   ================================================================ */
+
+#luxlife-magazine .search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 42%, rgba(28, 22, 10, 0.96) 0%, rgba(9, 9, 10, 0.99) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s var(--lx-ease);
+  /* Grain texture */
+  isolation: isolate;
+}
+
+#luxlife-magazine .search-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 260px 260px;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: -1;
+}
+
+#luxlife-magazine .search-overlay.is-open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+
+/* ---- Bezárás gomb ---- */
+
+#luxlife-magazine .search-close {
+  position: absolute;
+  top: 2.2rem;
+  right: 2.4rem;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#luxlife-magazine .search-close span {
+  position: absolute;
+  display: block;
+  width: 22px;
+  height: 1px;
+  background-color: rgba(250, 248, 242, 0.40);
+  transition: background-color 0.22s var(--lx-ease), transform 0.22s var(--lx-ease);
+}
+
+#luxlife-magazine .search-close span:first-child {
+  transform: rotate(45deg);
+}
+
+#luxlife-magazine .search-close span:last-child {
+  transform: rotate(-45deg);
+}
+
+#luxlife-magazine .search-close:hover span {
+  background-color: var(--lx-gold-light);
+}
+
+
+/* ---- Belső tároló ---- */
+
+#luxlife-magazine .search-inner {
+  width: min(640px, 88vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+
+/* ---- Fejléc szöveg ---- */
+
+#luxlife-magazine .search-eyebrow {
+  font-family: var(--lx-font-headline);
+  font-style: normal;
+  font-size: 0.78rem;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: 0.30em;
+  color: var(--lx-gold);
+  text-align: center;
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: none;
+}
+
+#luxlife-magazine .search-overlay.is-open .search-eyebrow {
+  animation: lx-fade-up 0.55s 0.15s var(--lx-ease-out) both;
+}
+
+
+/* ---- Arany vízszintes vonal ---- */
+
+#luxlife-magazine .search-rule {
+  width: 0;
+  height: 0.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--lx-gold) 20%,
+    var(--lx-gold-light) 50%,
+    var(--lx-gold) 80%,
+    transparent
+  );
+  margin-bottom: 2.6rem;
+}
+
+#luxlife-magazine .search-overlay.is-open .search-rule {
+  animation: lx-line-draw 0.80s 0.30s var(--lx-ease-out) both;
+}
+
+
+/* ---- Beviteli mező + gomb sor ---- */
+
+#luxlife-magazine .search-box {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid rgba(196, 166, 96, 0.35);
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+#luxlife-magazine .search-overlay.is-open .search-box {
+  animation: lx-fade-up 0.55s 0.40s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--lx-font-display);
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  color: var(--lx-cream);
+  padding: 0.5rem 0.8rem 0.8rem 0;
+  caret-color: var(--lx-gold);
+  width: 100%;
+}
+
+#luxlife-magazine .search-input::placeholder {
+  color: rgba(250, 248, 242, 0.18);
+  font-style: italic;
+}
+
+#luxlife-magazine .search-btn {
+  background: none;
+  border: none;
+  font-family: var(--lx-font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--lx-gold);
+  cursor: pointer;
+  padding: 0.3rem 0 0.6rem 0.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.22s var(--lx-ease), transform 0.22s var(--lx-ease);
+}
+
+#luxlife-magazine .search-btn:hover {
+  color: var(--lx-gold-light);
+  transform: translateX(5px);
+}
+
+
+/* ---- Gyors javaslatok ---- */
+
+#luxlife-magazine .search-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0;
+}
+
+#luxlife-magazine .search-overlay.is-open .search-suggestions {
+  animation: lx-fade-in 0.6s 0.60s var(--lx-ease-out) both;
+}
+
+#luxlife-magazine .suggestions-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.50rem;
+  font-weight: 200;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(250, 248, 242, 0.28);
+}
+
+#luxlife-magazine .search-suggestions a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250, 248, 242, 0.42);
+  text-decoration: none;
+  transition: color 0.22s var(--lx-ease);
+  border-bottom: 0.5px solid transparent;
+  padding-bottom: 0.1rem;
+}
+
+#luxlife-magazine .search-suggestions a:hover {
+  color: var(--lx-gold-light);
+  border-bottom-color: rgba(196, 166, 96, 0.40);
+}
+
+
+/* ---- Lábléc szöveg ---- */
+
+#luxlife-magazine .search-footer-line {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--lx-font-display);
+  font-style: italic;
+  font-size: 0.58rem;
+  font-optical-sizing: auto;
+  letter-spacing: 0.16em;
+  color: rgba(250, 248, 242, 0.12);
+  white-space: nowrap;
+  opacity: 0;
+}
+
+#luxlife-magazine .search-overlay.is-open .search-footer-line {
+  animation: lx-fade-in 0.8s 0.75s var(--lx-ease-out) both;
+}
+
+
+/* ================================================================
+   EDITORIAL STRIP — 3 cikk szekció
+   ================================================================ */
+
+#luxlife-magazine .editorial-strip {
+  padding: 0;
+}
+
+#luxlife-magazine .es-divider {
+  height: 0.5px;
+  background: rgba(196, 166, 96, 0.28);
+  margin: 2.2rem 0;
+}
+
+#luxlife-magazine .es-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  padding: 0 0 2.8rem;
+}
+
+#luxlife-magazine .es-card {
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#luxlife-magazine .es-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#luxlife-magazine .es-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+#luxlife-magazine .es-card-img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+#luxlife-magazine .es-card-num {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-family: 'Bodoni Moda', serif;
+  font-size: 4.5rem;
+  font-weight: 400;
+  color: #ffffff;
+  opacity: 0.14;
+  line-height: 1;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+#luxlife-magazine .es-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.88);
+  transition:
+    transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    filter 0.9s ease;
+}
+
+#luxlife-magazine .es-card:hover .es-card-img img {
+  transform: scale(1.045);
+  filter: brightness(1);
+}
+
+#luxlife-magazine .es-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(9, 9, 10, 0.45) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+#luxlife-magazine .es-img-thread {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    var(--lx-gold),
+    var(--lx-gold-light),
+    var(--lx-gold)
+  );
+  z-index: 3;
+  transition: width 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+#luxlife-magazine .es-card:hover .es-img-thread {
+  width: 100%;
+}
+
+#luxlife-magazine .es-card-body {
+  padding: 1.5rem 1.8rem 2rem;
+  position: relative;
+}
+
+#luxlife-magazine .es-card-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5px;
+  height: 0;
+  background: linear-gradient(to bottom, var(--lx-gold), transparent);
+  transition: height 0.5s ease;
+}
+
+#luxlife-magazine .es-card:hover .es-card-body::before {
+  height: 100%;
+}
+
+#luxlife-magazine .es-cat {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--lx-gold);
+}
+
+#luxlife-magazine .es-title {
+  font-family: 'Fraunces', serif;
+  font-style: normal;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--lx-void);
+  line-height: 1.35;
+  margin: 0.65rem 0 0;
+}
+
+#luxlife-magazine .es-excerpt {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(44, 42, 39, 0.65);
+  line-height: 1.65;
+  margin: 0.75rem 0 0;
+}
+
+#luxlife-magazine .es-cta {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 200;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lx-gold);
+  margin-top: 1.2rem;
+}
+
+
+/* 2 cikkes változat */
+#luxlife-magazine .es-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#luxlife-magazine .es-grid--2 .es-card-img {
+  aspect-ratio: 4 / 3;
+}
+
+#luxlife-magazine .es-grid--2 .es-title {
+  font-size: 1.9rem;
+}
+
+#luxlife-magazine .es-grid--2 .es-card-body {
+  padding: 2rem 2.2rem 2.6rem;
+}
+
+#luxlife-magazine .es-grid--2 .es-excerpt {
+  font-size: 0.85rem;
+}
+
+
+/* ================================================================
+   FOOTER
+   ================================================================ */
+
+#luxlife-magazine .lx-footer {
+  background: var(--lx-void);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+#luxlife-magazine .lx-footer-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  animation: lx-grain-flicker 0.35s steps(1) infinite;
+}
+
+#luxlife-magazine .lx-footer > :not(.lx-footer-grain) {
+  position: relative;
+  z-index: 1;
+}
+
+#luxlife-magazine .lx-footer-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+  padding: 4rem 3rem 3.5rem;
+}
+
+#luxlife-magazine .lx-footer-masthead {
+  flex: 0 0 auto;
+}
+
+#luxlife-magazine .lx-footer-logo {
+  font-family: var(--lx-font-display);
+  font-size: clamp(3.5rem, 6vw, 7rem);
+  font-weight: 400;
+  color: var(--lx-cream);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: block;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+}
+
+#luxlife-magazine .lx-footer-logo:hover {
+  opacity: 0.8;
+}
+
+#luxlife-magazine .lx-footer-logo em {
+  font-style: italic;
+  color: var(--lx-gold);
+}
+
+#luxlife-magazine .lx-footer-slogan {
+  font-family: var(--lx-font-headline);
+  font-style: italic;
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(250, 248, 242, 0.38);
+  letter-spacing: 0.08em;
+  margin-top: 1.1rem;
+}
+
+#luxlife-magazine .lx-footer-cols {
+  display: flex;
+  gap: 3.5rem;
+  flex: 1;
+  justify-content: flex-end;
+  padding-top: 0.4rem;
+}
+
+#luxlife-magazine .lx-footer-rule {
+  height: 0.5px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(196, 166, 96, 0.30) 12%,
+    rgba(196, 166, 96, 0.30) 88%,
+    transparent 100%
+  );
+  margin: 0 3rem;
+}
+
+#luxlife-magazine .lx-footer-body {
+  display: none;
+}
+
+#luxlife-magazine .lx-footer-col-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 200;
+  letter-spacing: 0.44em;
+  text-transform: uppercase;
+  color: var(--lx-gold);
+  display: block;
+  margin-bottom: 1.6rem;
+}
+
+#luxlife-magazine .lx-footer-nav,
+#luxlife-magazine .lx-footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+#luxlife-magazine .lx-footer-nav a,
+#luxlife-magazine .lx-footer-social a {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 200;
+  color: rgba(250, 248, 242, 0.52);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+
+#luxlife-magazine .lx-footer-nav a:hover,
+#luxlife-magazine .lx-footer-social a:hover {
+  color: var(--lx-gold-light);
+}
+
+#luxlife-magazine .lx-footer-col--right {
+  text-align: right;
+}
+
+#luxlife-magazine .lx-footer-vline {
+  width: 0.5px;
+  align-self: stretch;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(196, 166, 96, 0.22) 20%,
+    rgba(196, 166, 96, 0.22) 80%,
+    transparent
+  );
+  margin: 0 4rem;
+}
+
+#luxlife-magazine .lx-footer-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.8rem 3rem 2.4rem;
+}
+
+#luxlife-magazine .lx-footer-copy {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 200;
+  color: rgba(250, 248, 242, 0.55);
+  letter-spacing: 0.14em;
+}
+
+#luxlife-magazine .lx-footer-tagline {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 200;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: rgba(196, 166, 96, 0.7);
+}
+
+
+/* ================================================================
+   MOBIL NÉZET — max-width: 768px
+   ================================================================ */
+
+@media (max-width: 1500px) {
+
+  html,
+  body {
+    height: auto;
+    overflow: auto;
+  }
+
+  /* Függőleges stack layout */
+  #luxlife-magazine {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+
+  /* ---- Bal oldal (cover) mobilon ---- */
+
+  #luxlife-magazine .cover {
+    width: 100%;
+    height: 90vh;
+    flex-shrink: 0;
+  }
+
+  /* Logó bar mobilon */
+  #luxlife-magazine .cover-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.4rem 0.5rem;
+  }
+
+  /* Bal oldali gombok csoportja */
+  /* Bal: kereső — Közép: logó — Jobb: hamburger */
+
+  #luxlife-magazine .cover-search-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6rem;
+    color: var(--lx-cream);
+    padding: 0.2rem;
+    line-height: 1;
+    transition: color 0.2s var(--lx-ease);
+    order: 1;
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  #luxlife-magazine .cover-search-mobile:hover {
+    color: var(--lx-gold-light);
+  }
+
+  #luxlife-magazine .cover-wordmark {
+    font-size: clamp(2.2rem, 9vw, 3.8rem);
+    order: 2;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  #luxlife-magazine .cover-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px;
+    flex-shrink: 0;
+    order: 3;
+    flex: 1;
+    align-items: flex-end;
+  }
+
+  #luxlife-magazine .cover-menu-btn span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background-color: var(--lx-cream);
+    border-radius: 1px;
+  }
+
+  /* Szlogen elrejtése mobilon */
+  #luxlife-magazine .cover-slogan {
+    display: none;
+  }
+
+  /* Hero szöveg */
+  #luxlife-magazine .cover-hero {
+    padding: 5vh 1.4rem 0;
+  }
+
+  #luxlife-magazine .hero-sm {
+    font-size: clamp(1.6rem, 6vw, 2.8rem);
+  }
+
+  #luxlife-magazine .hero-xl {
+    font-size: clamp(3.2rem, 12vw, 5.5rem);
+  }
+
+  #luxlife-magazine .hero-sub {
+    font-size: 0.58rem;
+  }
+
+  #luxlife-magazine .hero-italic {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  /* Alsó 3 cikk — egymás alatt, a képen */
+  #luxlife-magazine .cover-articles {
+    grid-template-columns: 1fr;
+    padding: 1.2rem 1.4rem 1.6rem;
+    gap: 0;
+    background-color: transparent;
+    border-top: none;
+  }
+
+  #luxlife-magazine .ca-col {
+    border-left: none;
+    border-top: 0.5px solid rgba(196, 166, 96, 0.25);
+    padding: 0.75rem 0;
+  }
+
+  #luxlife-magazine .ca-col:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  #luxlife-magazine .ca-title,
+  #luxlife-magazine .ca-title-rg {
+    font-size: 1.3rem;
+  }
+
+
+  /* ---- Jobb oldal (content) mobilon ---- */
+
+  #luxlife-magazine .content-panel {
+    height: auto;
+    overflow-y: visible;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Nav elrejtése mobilon — csak a hamburger marad */
+  #luxlife-magazine .top-nav {
+    display: none;
+  }
+
+  /* Billboard */
+  #luxlife-magazine .billboard-wrap {
+    padding: 1.2rem 0 0.4rem;
+  }
+
+  #luxlife-magazine .billboard-img {
+    max-width: 100%;
+  }
+
+  /* Featured cikk — kép felül, szöveg alul */
+  #luxlife-magazine .featured {
+    grid-template-columns: 1fr;
+  }
+
+  #luxlife-magazine .featured-content {
+    padding: 1.8rem 1.6rem 2rem;
+  }
+
+  /* Kártya gridek — 1 oszlop */
+  #luxlife-magazine .grid-2,
+  #luxlife-magazine .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer mobilon */
+  #luxlife-magazine .lx-footer-top {
+    flex-direction: column;
+    gap: 2.4rem;
+    padding: 3rem 1.8rem 2.5rem;
+  }
+
+  #luxlife-magazine .lx-footer-cols {
+    justify-content: flex-start;
+    gap: 2.5rem;
+  }
+
+  #luxlife-magazine .lx-footer-logo {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  #luxlife-magazine .lx-footer-rule {
+    margin: 0 1.8rem;
+  }
+
+  #luxlife-magazine .lx-footer-base {
+    flex-direction: column;
+    gap: 0.7rem;
+    text-align: center;
+    padding: 1.5rem 1.8rem 2.2rem;
+  }
+
+  /* Editorial strip — mobilon */
+  #luxlife-magazine .es-grid,
+  #luxlife-magazine .es-grid--2 {
+    grid-template-columns: 1fr;
+    padding: 0 0 2rem;
+  }
+
+  #luxlife-magazine .es-card-img {
+    aspect-ratio: 1 / 1;
+  }
+
+  #luxlife-magazine .es-header {
+    padding: 1.8rem 1.6rem 1.4rem;
+  }
+
+}

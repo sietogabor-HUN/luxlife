@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Stílus & szépség — LuxLife. A legjobb divat és szépségápolási cikkek.">
+  <title>Stílus & szépség | LuxLife</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700;1,6..96,900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@200;700;800;900&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Kategória cím a bal panelen */
+    #luxlife-magazine .lista-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    #luxlife-magazine .lista-cat-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 5vw, 5.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--lx-cream);
+    }
+
+    #luxlife-magazine .lista-cat-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-weight: 200;
+      font-size: 0.72rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--lx-gold);
+      margin: 1.2rem 0 0;
+    }
+
+    #luxlife-magazine .lista-cat-amp {
+      font-family: var(--lx-font-display);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--lx-gold-light);
+      letter-spacing: 0;
+    }
+
+    #luxlife-magazine .lista-cat-rule {
+      width: 3rem;
+      height: 1px;
+      background: rgba(196, 166, 96, 0.45);
+      margin: 1.6rem auto 0;
+    }
+
+    #luxlife-magazine .content-area { padding-bottom: 2.8rem; }
+
+    /* Lapozó — The Folio */
+    #luxlife-magazine .lx-pagination {
+      position: relative;
+      padding: 0 2.8rem;
+      flex-shrink: 0;
+      background: linear-gradient(to bottom, transparent 0%, #ffffff 100%);
+    }
+
+    #luxlife-magazine .lx-pag-rule {
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, var(--lx-gold) 25%, var(--lx-gold) 75%, transparent 100%);
+      opacity: 0.55;
+    }
+
+    #luxlife-magazine .lx-pag-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.2rem;
+      padding: 3.8rem 0;
+    }
+
+    #luxlife-magazine .lx-page-arrow {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-weight: 200;
+      font-size: 0.68rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--lx-void);
+      transition: opacity 0.3s ease;
+    }
+
+    #luxlife-magazine .lx-page-arrow:hover { opacity: 0.5; }
+
+    #luxlife-magazine .lx-page-arrow-rule {
+      display: block;
+      height: 1px;
+      width: 2.4rem;
+      background: var(--lx-void);
+      flex-shrink: 0;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #luxlife-magazine .lx-page-prev:hover .lx-page-arrow-rule { transform: translateX(-1.2rem); }
+    #luxlife-magazine .lx-page-next:hover .lx-page-arrow-rule { transform: translateX(1.2rem); }
+
+    #luxlife-magazine .lx-pag-folio {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      line-height: 1;
+    }
+
+    #luxlife-magazine .lx-pag-current {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(3.5rem, 5vw, 5.5rem);
+      color: var(--lx-void);
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+    }
+
+    #luxlife-magazine .lx-pag-sep {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: var(--lx-void);
+      opacity: 0.25;
+      margin: 0 0.1rem;
+    }
+
+    #luxlife-magazine .lx-pag-total {
+      font-family: 'Jost', sans-serif;
+      font-weight: 200;
+      font-size: 0.85rem;
+      color: var(--lx-void);
+      opacity: 0.4;
+      letter-spacing: 0.12em;
+    }
+
+    @media (max-width: 1500px) {
+      #luxlife-magazine .lx-pag-inner { gap: 1.4rem; padding: 2.6rem 0; }
+      #luxlife-magazine .lx-page-arrow-label { display: none; }
+      #luxlife-magazine .lx-page-arrow-rule { width: 1.6rem; }
+      #luxlife-magazine .lx-page-arrow { padding: 1.2rem 0.8rem; }
+    }
+
+    #luxlife-magazine .cover-overlay {
+      background:
+        linear-gradient(to bottom, rgba(9,9,10,0.88) 0%, rgba(9,9,10,0.20) 18%, rgba(9,9,10,0) 28%),
+        linear-gradient(to right, rgba(9,9,10,0.28) 0%, rgba(9,9,10,0) 55%),
+        rgba(9,9,10,0.42);
+    }
+
+    @media (max-width: 1500px) {
+      #luxlife-magazine .lista-hero {
+        justify-content: flex-end;
+        padding: 0 1.4rem 3rem;
+        text-align: left;
+        align-items: flex-start;
+      }
+
+      #luxlife-magazine .lista-cat-title {
+        font-size: clamp(2.2rem, 9vw, 3.8rem);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="luxlife-magazine">
+
+  <!-- ==========================================================
+       LEFT PANEL — KATEGÓRIA BORÍTÓ
+       ========================================================== -->
+  <aside class="cover" aria-label="Kategória borító">
+
+    <div class="cover-bg" role="img" aria-label="Borító fotó"></div>
+    <div class="cover-grain" aria-hidden="true"></div>
+
+    <div class="cover-overlay">
+
+      <div class="cover-top-bar">
+
+        <button class="cover-search-mobile" aria-label="Keresés">&#x2315;</button>
+
+        <button class="cover-menu-btn" aria-label="Menü" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <a href="index.html" class="cover-wordmark">Lux<em>Life</em></a>
+        <span class="cover-slogan">A tökéletes pillanat.</span>
+
+      </div><!-- /.cover-top-bar -->
+
+
+      <div class="lista-hero">
+        <h1 class="lista-cat-title">
+          Stílus <span class="lista-cat-amp">&amp;</span> szépség
+        </h1>
+        <div class="lista-cat-rule" aria-hidden="true"></div>
+        <p class="lista-cat-eyebrow">Kategória</p>
+      </div><!-- /.lista-hero -->
+
+    </div><!-- /.cover-overlay -->
+  </aside><!-- /.cover -->
+
+
+  <!-- ==========================================================
+       RIGHT PANEL
+       ========================================================== -->
+  <main class="content-panel">
+
+    <nav class="top-nav" aria-label="Fő kategória navigáció">
+
+      <ul class="nav-cats" role="list">
+        <li class="active"><a href="lista.html">Stílus &amp; szépség</a></li>
+        <li><a href="lista.html">Gasztronómia</a></li>
+        <li><a href="lista.html">Utazás</a></li>
+        <li><a href="lista.html">Kultúra</a></li>
+        <li><a href="technika.html">Technika &amp; design</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-search" aria-label="Keresés">&#x2315;</button>
+      </div>
+
+    </nav><!-- /.top-nav -->
+
+
+    <!-- Billboard hirdetés -->
+    <div class="billboard-wrap">
+      <picture>
+        <source media="(max-width: 1500px)" srcset="billboard-mobil.jpg">
+        <img src="billboard.jpg" alt="Hirdetés" class="billboard-img">
+      </picture>
+      <span class="billboard-label">Hirdetés</span>
+    </div>
+
+
+    <!-- Cikkek -->
+    <div class="content-area">
+
+      <section class="editorial-strip">
+        <div class="es-grid">
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-2.jpg" alt="Chanel 11.12 táska" loading="eager">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Chanel 11.12 — az a táska, amely soha nem megy ki a divatból</h3>
+                <p class="es-excerpt">Több mint hat évtizede mutatja meg, mit jelent az időtlen elegancia. Státuszszimbólum, befektetés és egy letisztult életérzés megtestesítője egyszerre.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-5.jpg" alt="Loro Piana kasmír" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Loro Piana kasmír útja: az Andoktól Milánóig</h3>
+                <p class="es-excerpt">A világ legfinomabb kasmírjának születése hat kontinensen átívelő út eredménye. A Loro Piana varázsa nem csupán az anyagban rejlik — hanem abban, ahogy megszületik.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-6.jpg" alt="La Mer bőrápolás" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Szépség</span>
+                <h3 class="es-title">La Mer és a tengerből született bőrápolás legendája</h3>
+                <p class="es-excerpt">Amit egyszer megpróbálsz, azt nem felejted el. A tengerből nyert biofermentum évtizedek óta a bőrápolás egyik legelismertebb csodája — és most végre tudjuk, miért.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+    </div><!-- /.content-area -->
+
+
+    <!-- Billboard 2 -->
+    <div class="billboard-wrap">
+      <picture>
+        <source media="(max-width: 1500px)" srcset="billboard-mobil2.jpg">
+        <img src="billboard2.jpg" alt="Hirdetés" class="billboard-img">
+      </picture>
+      <span class="billboard-label">Hirdetés</span>
+    </div>
+
+
+    <!-- Cikkek 2 -->
+    <div class="content-area">
+
+      <section class="editorial-strip">
+        <div class="es-grid">
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-3.jpg" alt="Hermès Birkin" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Hermès Birkin — miért nem csökken soha az értéke?</h3>
+                <p class="es-excerpt">Egyetlen táska sem bizonyítja jobban, hogy a valódi luxus időtálló befektetés. A Birkin piaci értéke az elmúlt évtizedben felülmúlta az aranyét.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-7.jpg" alt="Dior haute couture" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Dior haute couture: amikor a varróterem műteremként működik</h3>
+                <p class="es-excerpt">A párizsi Avenue Montaigne-n minden öltés mögött évtizedes mesterség áll. Látogass el a kulisszák mögé, ahol a divat igazi művészetté válik.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-10.jpg" alt="Sisley bőrápolás" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Szépség</span>
+                <h3 class="es-title">Sisley Black Rose: a párizsi bőrápolás új arany korszaka</h3>
+                <p class="es-excerpt">A Sisley Black Rose Skin Infusion Cream nem ígér kevesebbet, mint tizenkét óra intenzív hidratálást és látható megfiatalodást — és be is tartja.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+    </div><!-- /.content-area -->
+
+
+    <!-- Billboard 3 -->
+    <div class="billboard-wrap">
+      <picture>
+        <source media="(max-width: 1500px)" srcset="billboard-mobil3.jpg">
+        <img src="billboard3.jpg" alt="Hirdetés" class="billboard-img">
+      </picture>
+      <span class="billboard-label">Hirdetés</span>
+    </div>
+
+
+    <!-- Cikkek 3 -->
+    <div class="content-area">
+      <section class="editorial-strip">
+        <div class="es-grid">
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-11.jpg" alt="Valentino" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Valentino Pink PP: amikor egy szín maga lesz a kiáltvány</h3>
+                <p class="es-excerpt">Pierpaolo Piccioli a 2022-es kollekcióval bebizonyította, hogy a monokróm nem egyhangúság — hanem a legmerészebb állítás, amit a divat tehet.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-4.jpg" alt="Gucci parfüm" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Szépség</span>
+                <h3 class="es-title">A parfümválasztás művészete: hogyan találd meg az aláírás-illatodat?</h3>
+                <p class="es-excerpt">Nem minden illat való mindenkinek — és ez nem gyengeség, hanem tudatosság. Egy parfümszakértő vezet végig a legfontosabb illatcsaládokon.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-8.jpg" alt="Bottega Veneta" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Bottega Veneta: a csend luxusa és az intrecciato titka</h3>
+                <p class="es-excerpt">Nincs logó, nincs felirat — csak a fonott bőr tökéletes szerkezete. Miért vált éppen az észrevétlenség a leghangosabb státuszszimbólummá?</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+        </div>
+      </section>
+    </div><!-- /.content-area -->
+
+
+    <!-- Cikkek 4 -->
+    <div class="content-area">
+      <section class="editorial-strip">
+        <div class="es-grid">
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-9.jpg" alt="Celine minimalizmus" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Celine és a francia minimalizmus újraértelmezése</h3>
+                <p class="es-excerpt">Hedi Slimane irányításával a Celine teljesen új arcot mutatott — és megmutatta, hogy a visszafogottság sosem jelent unalmast.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-1.jpg" alt="Skin minimalism" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Szépség</span>
+                <h3 class="es-title">Skin minimalism: kevesebb termék, tökéletesebb bőr</h3>
+                <p class="es-excerpt">A koreai szépségápolás egyik legnagyobb tanulsága: a bőrnek nem több termék kell, hanem a megfelelő. Hogyan építs fel egy valóban hatékony rutint?</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="es-card">
+            <a href="cikk-adatlap.html" class="es-card-link">
+              <div class="es-card-img">
+                <img src="blog-12.jpg" alt="Prada napszemüveg" loading="lazy">
+                <div class="es-card-img-overlay" aria-hidden="true"></div>
+                <span class="es-img-thread" aria-hidden="true"></span>
+              </div>
+              <div class="es-card-body">
+                <span class="es-cat">Divat</span>
+                <h3 class="es-title">Prada napszemüveg: egy kiegészítő, amely karakter</h3>
+                <p class="es-excerpt">A Prada Symbole és a Candy frissített vonalai bizonyítják: a napszemüveg nemcsak véd, hanem meghatározza, ahogy a világ lát téged.</p>
+                <span class="es-cta">Teljes cikk &rarr;</span>
+              </div>
+            </a>
+          </article>
+
+        </div>
+      </section>
+    </div><!-- /.content-area -->
+
+
+    <!-- Lapozó -->
+    <nav class="lx-pagination" aria-label="Lapozás">
+
+      <div class="lx-pag-inner">
+
+        <a href="#" class="lx-page-arrow lx-page-prev" aria-label="Előző oldal">
+          <span class="lx-page-arrow-rule" aria-hidden="true"></span>
+          <span class="lx-page-arrow-label">Előző</span>
+        </a>
+
+        <div class="lx-pag-folio" aria-label="1 / 12. oldal">
+          <span class="lx-pag-current" aria-hidden="true">01</span>
+          <span class="lx-pag-sep" aria-hidden="true">/</span>
+          <span class="lx-pag-total" aria-hidden="true">12</span>
+        </div>
+
+        <a href="#" class="lx-page-arrow lx-page-next" aria-label="Következő oldal">
+          <span class="lx-page-arrow-label">Következő</span>
+          <span class="lx-page-arrow-rule" aria-hidden="true"></span>
+        </a>
+
+      </div>
+
+      <div class="lx-pag-rule" aria-hidden="true"></div>
+
+    </nav>
+
+
+    <!-- Footer -->
+    <footer class="lx-footer">
+
+      <div class="lx-footer-grain" aria-hidden="true"></div>
+
+      <div class="lx-footer-top">
+
+        <div class="lx-footer-masthead">
+          <a href="index.html" class="lx-footer-logo">Lux<em>Life</em></a>
+          <p class="lx-footer-slogan">A tökéletes pillanat.</p>
+        </div>
+
+        <div class="lx-footer-cols">
+
+          <div class="lx-footer-col">
+            <span class="lx-footer-col-label">Kategóriák</span>
+            <nav class="lx-footer-nav">
+              <a href="lista.html">Stílus &amp; szépség</a>
+              <a href="lista.html">Gasztronómia</a>
+              <a href="lista.html">Utazás</a>
+              <a href="lista.html">Kultúra</a>
+              <a href="technika.html">Technika &amp; design</a>
+            </nav>
+          </div>
+
+          <div class="lx-footer-col">
+            <span class="lx-footer-col-label">Kövess minket</span>
+            <nav class="lx-footer-social">
+              <a href="#">Instagram</a>
+              <a href="#">Facebook</a>
+            </nav>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="lx-footer-rule" aria-hidden="true"></div>
+
+      <div class="lx-footer-base">
+        <span class="lx-footer-copy">&copy; 2026 LuxLife. Minden jog fenntartva.</span>
+        <span class="lx-footer-tagline">The Art of Living Beautifully</span>
+      </div>
+
+    </footer>
+
+  </main><!-- /.content-panel -->
+
+
+  <!-- Mobil navigációs menü -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Navigáció">
+
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Bezárás">
+      <span></span><span></span>
+    </button>
+
+    <div class="mobile-menu-inner">
+
+      <div class="mobile-menu-header">
+        <a href="index.html" class="mobile-menu-logo">Lux<em>Life</em></a>
+        <div class="mobile-menu-rule"></div>
+      </div>
+
+      <nav class="mobile-menu-nav">
+        <ul>
+          <li class="mmi" style="--i:0"><a href="lista.html"><span class="mmi-name">Stílus &amp; szépség</span></a></li>
+          <li class="mmi" style="--i:1"><a href="lista.html"><span class="mmi-name">Gasztronómia</span></a></li>
+          <li class="mmi" style="--i:2"><a href="lista.html"><span class="mmi-name">Utazás</span></a></li>
+          <li class="mmi" style="--i:3"><a href="lista.html"><span class="mmi-name">Kultúra</span></a></li>
+          <li class="mmi" style="--i:4"><a href="technika.html"><span class="mmi-name">Technika &amp; design</span></a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="mobile-menu-spine" aria-hidden="true"></div>
+
+  </div>
+
+  <!-- Kereső overlay -->
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+
+    <button class="search-close" id="searchClose" aria-label="Bezárás">
+      <span></span><span></span>
+    </button>
+
+    <div class="search-inner">
+
+      <p class="search-eyebrow">— Keresés —</p>
+      <div class="search-rule"></div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Mire keresel?"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="search-btn" id="searchBtn" aria-label="Keresés">&#x2192;</button>
+      </div>
+
+      <div class="search-suggestions">
+        <span class="suggestions-label">Népszerű:</span>
+        <a href="#">Chanel</a>
+        <a href="#">Divat</a>
+        <a href="#">Szépség</a>
+        <a href="#">Kasmír</a>
+        <a href="#">La Mer</a>
+      </div>
+
+    </div>
+
+    <p class="search-footer-line">LuxLife &mdash; The Art of Living Beautifully</p>
+
+  </div>
+
+</div><!-- #luxlife-magazine -->
+
+
+<script>
+  document.querySelector('#luxlife-magazine .cover-bg').style.backgroundImage = 'url(stilus-cover.jpg)';
+
+  // Mobil menü
+  var mobileMenu      = document.getElementById('mobileMenu');
+  var mobileMenuClose = document.getElementById('mobileMenuClose');
+  var hamburgerBtn    = document.querySelector('#luxlife-magazine .cover-menu-btn');
+
+  function openMobileMenu() {
+    mobileMenu.classList.add('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    hamburgerBtn.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    hamburgerBtn.classList.remove('menu-open');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', function () {
+    mobileMenu.classList.contains('is-open') ? closeMobileMenu() : openMobileMenu();
+  });
+
+  mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+  mobileMenu.addEventListener('click', function (e) {
+    if (e.target === mobileMenu) closeMobileMenu();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // Kereső overlay
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchInput   = document.getElementById('searchInput');
+  var searchClose   = document.getElementById('searchClose');
+  var searchBtn     = document.getElementById('searchBtn');
+
+  function openSearch() {
+    searchOverlay.classList.add('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(function () { searchInput.focus(); }, 50);
+  }
+
+  document.querySelector('#luxlife-magazine .btn-search').addEventListener('click', openSearch);
+  document.querySelector('#luxlife-magazine .cover-search-mobile').addEventListener('click', openSearch);
+
+  function closeSearch() {
+    searchOverlay.classList.remove('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  searchClose.addEventListener('click', closeSearch);
+
+  searchOverlay.addEventListener('click', function (e) {
+    if (e.target === searchOverlay) closeSearch();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+
+  // Scroll-triggered card animation
+  var cardObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var card = entry.target;
+        var siblings = Array.from(card.parentElement.children);
+        var idx = siblings.indexOf(card);
+        card.style.transitionDelay = (idx * 0.12) + 's';
+        card.classList.add('is-visible');
+        cardObserver.unobserve(card);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('#luxlife-magazine .es-card').forEach(function (card) {
+    cardObserver.observe(card);
+  });
+</script>
+
+</body>
+</html>

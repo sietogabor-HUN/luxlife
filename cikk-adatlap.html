@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Az elegancia mindig a csendből születik — Vincent Darré a tökéletes térről. LuxLife interjú.">
+  <title>Vincent Darré a tökéletes térről | LuxLife</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700;1,6..96,900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@200;700;800;900&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Cikk adatlap — bal panel hero */
+    #luxlife-magazine .cikk-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.4rem 7rem;
+    }
+
+    #luxlife-magazine .cikk-hero-cat {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 200;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: var(--lx-gold);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    #luxlife-magazine .cikk-hero-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 3.8vw, 4.2rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--lx-cream);
+    }
+
+    #luxlife-magazine .cikk-hero-title em {
+      font-style: normal;
+      color: var(--lx-gold-light);
+    }
+
+    #luxlife-magazine .cikk-hero-rule {
+      width: 2.8rem;
+      height: 1px;
+      background: var(--lx-gold);
+      opacity: 0.5;
+      margin-bottom: 1.4rem;
+    }
+
+    @media (max-width: 1500px) {
+      #luxlife-magazine .cikk-hero {
+        padding: 2rem 1.4rem 2rem;
+        justify-content: flex-end;
+      }
+
+      #luxlife-magazine .cikk-hero-title {
+        font-size: clamp(1.8rem, 6vw, 3rem);
+      }
+    }
+
+    /* ── Cikk layout ── */
+    #luxlife-magazine .cikk-layout {
+      display: flex;
+      align-items: flex-start;
+      margin: 0 auto;
+      gap: 3rem;
+    }
+
+    #luxlife-magazine .cikk-main {
+      flex: 1;
+      min-width: 0;
+      padding: 3rem 2.8rem 5rem;
+      max-width: 700px;
+    }
+
+    #luxlife-magazine .cikk-body p {
+      font-family: 'Fraunces', serif;
+      font-size: 1.08rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--lx-dark);
+      margin-bottom: 1.7rem;
+    }
+
+    #luxlife-magazine .cikk-body p:first-child::first-letter {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 400;
+      font-size: 5rem;
+      line-height: 0.82;
+      float: left;
+      margin-right: 0.1em;
+      margin-top: 0.06em;
+      color: var(--lx-void);
+      letter-spacing: 0;
+    }
+
+    #luxlife-magazine .cikk-inline-img {
+      width: 100%;
+      display: block;
+      margin-bottom: 1.7rem;
+    }
+
+    #luxlife-magazine .cikk-pullquote {
+      border-left: 2px solid var(--lx-gold);
+      padding: 0.8rem 2rem;
+      margin: 2.4rem 0;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1.28rem;
+      font-weight: 400;
+      color: var(--lx-dark);
+      line-height: 1.6;
+    }
+
+    /* ── Sidebar ── */
+    #luxlife-magazine .cikk-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      padding: 2rem 1.8rem 2rem 0;
+      border-left: none;
+    }
+
+    #luxlife-magazine .sidebar-ad {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    #luxlife-magazine .sidebar-ad-img {
+      width: 100%;
+      display: block;
+    }
+
+    #luxlife-magazine .sidebar-related-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lx-dark);
+      display: block;
+      margin-bottom: 1.2rem;
+      padding-top: 1rem;
+      border-top: 0.5px solid rgba(196, 166, 96, 0.25);
+    }
+
+    #luxlife-magazine .sidebar-articles {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    #luxlife-magazine .sidebar-article-link {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      text-decoration: none;
+    }
+
+    #luxlife-magazine .sidebar-article-img {
+      width: 72px;
+      height: 58px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    #luxlife-magazine .sidebar-article-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.42;
+      color: var(--lx-dark);
+      transition: color 0.25s ease;
+    }
+
+    #luxlife-magazine .sidebar-article-link:hover .sidebar-article-title {
+      color: var(--lx-gold);
+    }
+
+    @media (max-width: 1500px) {
+      #luxlife-magazine .cikk-layout {
+        flex-direction: column;
+      }
+
+      #luxlife-magazine .cikk-main {
+        padding: 2rem 1.6rem 3rem;
+      }
+
+      #luxlife-magazine .cikk-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 0.5px solid rgba(44, 42, 39, 0.1);
+        padding: 2rem 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="luxlife-magazine">
+
+  <!-- ==========================================================
+       LEFT PANEL — CIKK BORÍTÓ
+       ========================================================== -->
+  <aside class="cover" aria-label="Cikk borító">
+
+    <div class="cover-bg" role="img" aria-label="Cikk fotó"></div>
+    <div class="cover-grain" aria-hidden="true"></div>
+
+    <div class="cover-overlay">
+
+      <div class="cover-top-bar">
+
+        <button class="cover-search-mobile" aria-label="Keresés">&#x2315;</button>
+
+        <button class="cover-menu-btn" aria-label="Menü" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <a href="index.html" class="cover-wordmark">Lux<em>Life</em></a>
+        <span class="cover-slogan">A tökéletes pillanat.</span>
+
+      </div><!-- /.cover-top-bar -->
+
+
+      <div class="cikk-hero">
+        <div class="cikk-hero-rule" aria-hidden="true"></div>
+        <span class="cikk-hero-cat">Kultúra</span>
+        <h1 class="cikk-hero-title">Az elegancia mindig a csendből születik <em>-</em> Vincent Darré a tökéletes térről</h1>
+      </div><!-- /.cikk-hero -->
+
+    </div><!-- /.cover-overlay -->
+  </aside><!-- /.cover -->
+
+
+  <!-- ==========================================================
+       RIGHT PANEL
+       ========================================================== -->
+  <main class="content-panel">
+
+    <nav class="top-nav" aria-label="Fő kategória navigáció">
+
+      <ul class="nav-cats" role="list">
+        <li><a href="lista.html">Stílus &amp; szépség</a></li>
+        <li><a href="lista.html">Gasztronómia</a></li>
+        <li><a href="lista.html">Utazás</a></li>
+        <li><a href="lista.html">Kultúra</a></li>
+        <li><a href="technika.html">Technika &amp; design</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-search" aria-label="Keresés">&#x2315;</button>
+      </div>
+
+    </nav><!-- /.top-nav -->
+
+
+    <!-- Billboard hirdetés -->
+    <div class="billboard-wrap">
+      <picture>
+        <source media="(max-width: 1500px)" srcset="billboard-mobil.jpg">
+        <img src="billboard.jpg" alt="Hirdetés" class="billboard-img">
+      </picture>
+      <span class="billboard-label">Hirdetés</span>
+    </div>
+
+
+    <!-- Cikk tartalom -->
+    <div class="cikk-layout">
+
+      <div class="cikk-main">
+        <div class="cikk-body">
+
+          <p>A párizsi belsőépítész, akit egyszerre tartanak zseniálisnak és őrültnek, ritkán ad interjút. Vincent Darré az Île Saint-Louis-i apartmanjában fogad — ahol a kandalló felett egy Dalí-rajz lóg, a könyvek tornyokban állnak, és a levegőben nehéz parfüm és viasz illata száll. Nem könnyű meghatározni, hol ér véget a lakás és hol kezdődik a tulajdonosa. Ez talán a legjobb bók, amit egy belsőépítésznek adhat az élet.</p>
+
+          <p>Darré neve a kilencvenes évek végén vált ismertté, amikor John Galliano személyes stylistjaként dolgozott a Dior kulisszái mögött. De a divat hamar szűknek bizonyult neki. „A ruha elfedi a testet" — mondja, miközben egy ősrégi bársonyfotelt simogat —, „a tér viszont feltárja a lelket. Nem lehet hazudni abban, ahogy valaki berendezi a lakását."</p>
+
+          <blockquote class="cikk-pullquote">„Az elegancia nem a drága anyagokban rejlik. Az elegancia a csend — az a pillanat, amikor egy szoba annyira tökéletes, hogy nem akar magáról mesélni."</blockquote>
+
+          <p>Munkáit a szürrealizmus és a klasszikus francia enteriőr különös elegye jellemzi. Egy Monte-Carlo-i villában tengeri szörnyeket idéző, kézzel faragott konzolasztalok találkoznak Louis XVI-os karosszékekkel. Egy londoni penthouse-ban a mennyezeten aranyfüst borítja az álmokat, miközben a padlón fekete-fehér márvány vezeti a szemet a horizont felé. Mindenhol ott van ez a feszültség — a komoly és a játékos, a történelmi és az abszurd között.</p>
+
+          <p>De mi az, ami igazán megkülönbözteti a jó teret a kivételestől? Darré hosszan hallgat, mielőtt válaszol. „A levegő" — mondja végül. „Minden szobában kell lennie valaminek, amit nem látsz. Egy illatnak, egy hangnak, egy emléknek. Ha egy tér csak arról szól, amit látsz, akkor az csupán dekoráció. Ha arról is szól, amit érezsz — az már építészet."</p>
+
+          <img src="blog-8.jpg" alt="" class="cikk-inline-img">
+
+          <p>A következő projektje Budapest. Egy Belle Époque-kori palota teljes rekonstrukciója, ahol, ahogy fogalmaz, „a Duna és Párizs végre szóba áll egymással." A megnyitó 2027 tavaszán várható — addig Vincent Darré visszatér a foteljébe, és hallgat. Elegánsan.</p>
+
+        </div>
+      </div><!-- /.cikk-main -->
+
+      <aside class="cikk-sidebar">
+
+        <div class="sidebar-ad">
+          <img src="halfpage.jpg" alt="Hirdetés" class="sidebar-ad-img">
+          <span class="billboard-label">Hirdetés</span>
+        </div>
+
+        <div class="sidebar-related">
+          <span class="sidebar-related-label">A kategóriából</span>
+          <ul class="sidebar-articles">
+
+            <li class="sidebar-article">
+              <a href="cikk-adatlap.html" class="sidebar-article-link">
+                <img src="blog-3.jpg" alt="" class="sidebar-article-img">
+                <h4 class="sidebar-article-title">Balenciaga és a tér — amikor a divat belsőépítészetté válik</h4>
+              </a>
+            </li>
+
+            <li class="sidebar-article">
+              <a href="cikk-adatlap.html" class="sidebar-article-link">
+                <img src="blog-6.jpg" alt="" class="sidebar-article-img">
+                <h4 class="sidebar-article-title">A Louvre éjszakai magányában — egy este a múzeum zárt kapui mögött</h4>
+              </a>
+            </li>
+
+            <li class="sidebar-article">
+              <a href="cikk-adatlap.html" class="sidebar-article-link">
+                <img src="blog-8.jpg" alt="" class="sidebar-article-img">
+                <h4 class="sidebar-article-title">Mantova titkai: az észak-olasz reneszánsz elfelejtett fővárosa</h4>
+              </a>
+            </li>
+
+            <li class="sidebar-article">
+              <a href="cikk-adatlap.html" class="sidebar-article-link">
+                <img src="blog-10.jpg" alt="" class="sidebar-article-img">
+                <h4 class="sidebar-article-title">Cecilia Bartoli Párizsban — egy este, amit nem felejt el a város</h4>
+              </a>
+            </li>
+
+            <li class="sidebar-article">
+              <a href="cikk-adatlap.html" class="sidebar-article-link">
+                <img src="blog-11.jpg" alt="" class="sidebar-article-img">
+                <h4 class="sidebar-article-title">Az új grand tour: Európa kulturális fővárosain át az elittel</h4>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+      </aside><!-- /.cikk-sidebar -->
+
+    </div><!-- /.cikk-layout -->
+
+
+    <!-- Billboard hirdetés 3 -->
+    <div class="billboard-wrap" style="margin-bottom: 3rem;">
+      <picture>
+        <source media="(max-width: 1500px)" srcset="billboard-mobil3.jpg">
+        <img src="billboard3.jpg" alt="Hirdetés" class="billboard-img">
+      </picture>
+      <span class="billboard-label">Hirdetés</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="lx-footer">
+
+      <div class="lx-footer-grain" aria-hidden="true"></div>
+
+      <div class="lx-footer-top">
+
+        <div class="lx-footer-masthead">
+          <a href="index.html" class="lx-footer-logo">Lux<em>Life</em></a>
+          <p class="lx-footer-slogan">A tökéletes pillanat.</p>
+        </div>
+
+        <div class="lx-footer-cols">
+
+          <div class="lx-footer-col">
+            <span class="lx-footer-col-label">Kategóriák</span>
+            <nav class="lx-footer-nav">
+              <a href="lista.html">Stílus &amp; szépség</a>
+              <a href="lista.html">Gasztronómia</a>
+              <a href="lista.html">Utazás</a>
+              <a href="lista.html">Kultúra</a>
+              <a href="technika.html">Technika &amp; design</a>
+            </nav>
+          </div>
+
+          <div class="lx-footer-col">
+            <span class="lx-footer-col-label">Kövess minket</span>
+            <nav class="lx-footer-social">
+              <a href="#">Instagram</a>
+              <a href="#">Facebook</a>
+            </nav>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="lx-footer-rule" aria-hidden="true"></div>
+
+      <div class="lx-footer-base">
+        <span class="lx-footer-copy">&copy; 2026 LuxLife. Minden jog fenntartva.</span>
+        <span class="lx-footer-tagline">The Art of Living Beautifully</span>
+      </div>
+
+    </footer>
+
+  </main><!-- /.content-panel -->
+
+
+  <!-- Mobil navigációs menü -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Navigáció">
+
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Bezárás">
+      <span></span><span></span>
+    </button>
+
+    <div class="mobile-menu-inner">
+
+      <div class="mobile-menu-header">
+        <a href="index.html" class="mobile-menu-logo">Lux<em>Life</em></a>
+        <div class="mobile-menu-rule"></div>
+      </div>
+
+      <nav class="mobile-menu-nav">
+        <ul>
+          <li class="mmi" style="--i:0"><a href="lista.html"><span class="mmi-name">Stílus &amp; szépség</span></a></li>
+          <li class="mmi" style="--i:1"><a href="lista.html"><span class="mmi-name">Gasztronómia</span></a></li>
+          <li class="mmi" style="--i:2"><a href="lista.html"><span class="mmi-name">Utazás</span></a></li>
+          <li class="mmi" style="--i:3"><a href="lista.html"><span class="mmi-name">Kultúra</span></a></li>
+          <li class="mmi" style="--i:4"><a href="technika.html"><span class="mmi-name">Technika &amp; design</span></a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="mobile-menu-spine" aria-hidden="true"></div>
+
+  </div>
+
+  <!-- Kereső overlay -->
+  <div class="search-overlay" id="searchOverlay" aria-hidden="true">
+
+    <button class="search-close" id="searchClose" aria-label="Bezárás">
+      <span></span><span></span>
+    </button>
+
+    <div class="search-inner">
+
+      <p class="search-eyebrow">— Keresés —</p>
+
+      <div class="search-rule"></div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          id="searchInput"
+          placeholder="Mire keresel?"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button class="search-btn" id="searchBtn" aria-label="Keresés">&#x2192;</button>
+      </div>
+
+      <div class="search-suggestions">
+        <span class="suggestions-label">Népszerű:</span>
+        <a href="#">Chanel</a>
+        <a href="#">Utazás</a>
+        <a href="#">Divat</a>
+        <a href="#">Interjú</a>
+        <a href="#">Design</a>
+      </div>
+
+    </div>
+
+    <p class="search-footer-line">LuxLife &mdash; The Art of Living Beautifully</p>
+
+  </div>
+
+</div><!-- #luxlife-magazine -->
+
+
+<script>
+  // Cikk borító háttér
+  document.querySelector('#luxlife-magazine .cover-bg').style.backgroundImage = 'url(blog-9.jpg)';
+
+  // Mobil menü
+  var mobileMenu      = document.getElementById('mobileMenu');
+  var mobileMenuClose = document.getElementById('mobileMenuClose');
+  var hamburgerBtn    = document.querySelector('#luxlife-magazine .cover-menu-btn');
+
+  function openMobileMenu() {
+    mobileMenu.classList.add('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    hamburgerBtn.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('is-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    hamburgerBtn.classList.remove('menu-open');
+    document.body.style.overflow = '';
+  }
+
+  hamburgerBtn.addEventListener('click', function () {
+    mobileMenu.classList.contains('is-open') ? closeMobileMenu() : openMobileMenu();
+  });
+
+  mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+  mobileMenu.addEventListener('click', function (e) {
+    if (e.target === mobileMenu) closeMobileMenu();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // Kereső overlay
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchInput   = document.getElementById('searchInput');
+  var searchClose   = document.getElementById('searchClose');
+  var searchBtn     = document.getElementById('searchBtn');
+
+  function openSearch() {
+    searchOverlay.classList.add('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(function () { searchInput.focus(); }, 50);
+  }
+
+  document.querySelector('#luxlife-magazine .btn-search').addEventListener('click', openSearch);
+  document.querySelector('#luxlife-magazine .cover-search-mobile').addEventListener('click', openSearch);
+
+  function closeSearch() {
+    searchOverlay.classList.remove('is-open');
+    searchOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  searchClose.addEventListener('click', closeSearch);
+
+  searchOverlay.addEventListener('click', function (e) {
+    if (e.target === searchOverlay) closeSearch();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+</script>
+
+</body>
+</html>
